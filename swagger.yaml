@@ -101,12 +101,124 @@ paths:
           description: Invalid Fields
         '500':
           description: Internal Server Error
+  /user/{userId}/transactions:
+    get:
+      security:
+        -  Bearer: []
+      tags:
+        -  Transaction Module
+      summary: All transactions
+      description: All month transactions by account
+      parameters:
+        - in: path
+          name: userId
+          description: UserId
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Return an array of transactions
+          schema: 
+            $ref: '#/definitions/Transactions'
+        '401':  
+          description: Not authorized
+        '404':
+          description: Not found
+        '403':
+          description: Not allowed
+        '500':
+          description: Internal Server Error
+  /transaction/{transactionId}:
+    get:
+      security:
+        -  Bearer: []
+      tags:
+        -  Transaction Module
+      summary: One transaction
+      description: One transaction
+      parameters:
+        - in: path
+          name: transactionId
+          description: transactionId
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Return one transaction
+          schema: 
+            $ref: '#/definitions/Transaction'
+        '401':  
+          description: Not authorized
+        '404':
+          description: Not found
+        '403':
+          description: Not allowed
+        '500':
+          description: Internal Server Error
+    put:
+      security:
+        -  Bearer: []
+      tags:
+        -  Transaction Module
+      summary: One transaction
+      description: One transaction
+      parameters:
+        - in: path
+          name: transactionId
+          description: transactionId
+          required: true
+          type: string
+        - in: body
+          name: transactionId
+          description: transactionId
+          required: true
+          schema:
+            $ref: '#/definitions/TransactionBody'
+      responses:
+        '200':
+          description: Return one transaction
+          schema: 
+            $ref: '#/definitions/Transaction'
+        '400':
+          description: Bad request
+        '401':  
+          description: Not authorized
+        '404':
+          description: Not found
+        '403':
+          description: Not allowed
+        '500':
+          description: Internal Server Error
+  
 securityDefinitions:
   Bearer:
     type: apiKey
     name: Authorization
     in: header
 definitions:
+  Transactions: 
+    type: array
+    items: 
+      $ref: '#/definitions/Transaction'
+  Transaction:
+    properties:
+      id:
+        type: string
+      userId:
+        type: string
+      accountId:
+        type: string
+      category:
+        type: string
+      note:
+        type: string
+  TransactionBody:
+    properties:
+      category:
+        type: string
+      note:
+        type: string
+      
   User:
     properties:
       email:
