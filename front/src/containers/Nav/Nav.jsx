@@ -31,9 +31,6 @@ export default function Nav() {
         } catch (error) {
             console.error(error);
             dispatch(logout());
-            // navigate
-            // Si on n'échoue dans la récupération de l'utilisateur, cela signifie peut-être que le token est expiré ou invalide. 
-            // Dans ce cas, on va rediriger vers la page de connexion. Avant cela, on va forcer une déconnexion (via handleLogout par exemple.)
         }
     }, [token, userName])
 
